@@ -69,7 +69,8 @@ def main():
                 and file_size is not None
             ):
                 total_size += file_size
-                status_counts[status_code] = status_counts.get(status_code, 0) + 1
+                status_counts[status_code] = status_counts.get(
+                        status_code, 0) + 1
 
             if i % 10 == 0:
                 print_statistics(total_size, status_counts)
