@@ -26,26 +26,21 @@ def makeChange(coins, total):
         >>> makeChange([1256, 54, 48, 16, 102], 1453)
         -1
     """
-    if not isinstance(coins, list):
-        raise TypeError("coins must be a list of coin values")
-    if not all(isinstance(coin, int) and coin > 0 for coin in coins):
-        raise ValueError("coin values must be positive integers")
-    if not isinstance(total, int):
-        raise TypeError("total must be an integer")
-    if total < 0:
-        raise ValueError("total cannot be negative")
+    if total <= 0:
+        return (0)
 
-    if total == 0:
-        return 0
-
-    # Create a list to store the minimum number of coins needed for each total
-    min_coins = [float('inf')] * (total + 1)
-    min_coins[0] = 0
-
-    # Iterate through each coin value
-    for coin in coins:
-        # Update min_coins list for each possible total
-        for i in range(coin, total + 1):
-            min_coins[i] = min(min_coins[i], min_coins[i - coin] + 1)
-
-    return min_coins[total] if min_coins[total] != float('inf') else -1
+    coins = sorted(coins)
+    count = 0
+    length = len(coins)
+    i = (length - 1)
+    while i >= 0:
+        if not total:
+            break
+        if coins[i] <= total:
+            total -= coins[i]
+            count += 1
+        else:
+            i -= 1
+    if total:
+        return (-1)
+    return (count)
