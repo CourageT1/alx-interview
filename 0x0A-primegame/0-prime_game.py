@@ -44,7 +44,7 @@ def SieveOfEratosthenes(n):
 
 
 def isWinner(x, nums):
-    """ 
+    """
     Determine the winner of multiple rounds of the Prime Game.
 
     Args:
