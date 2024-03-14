@@ -44,32 +44,39 @@ def SieveOfEratosthenes(n):
 
 
 def isWinner(x, nums):
-    """
-    Determine the winner of multiple rounds of the game.
+    """ 
+    Determine the winner of multiple rounds of the Prime Game.
 
     Args:
         x (int): The number of rounds.
         nums (list): An array of integers representing the upper limit for
         each round.
-
     Returns:
         str or None: The name of the player who won the most rounds
         ('Maria' or 'Ben').
                      Returns None if the winner cannot be determined.
     """
-    maria_wins = 0
-    ben_wins = 0
+    # Initialize counters for Maria's and Ben's wins
+    b_win, m_win = 0, 0
 
-    for n in nums:
-        winner = simulate_game(n)
-        if winner == "Maria":
-            maria_wins += 1
-        elif winner == "Ben":
-            ben_wins += 1
+    # If no rounds, return None
+    if not x:
+        return None
 
-    if maria_wins > ben_wins:
-        return "Maria"
-    elif ben_wins > maria_wins:
+    # Iterate through each round
+    for i in range(x):
+        # Count primes using Sieve of Eratosthenes
+        primes = SieveOfEratosthenes(nums[i])
+        # Determine winner of the round based on the count of primes
+        if primes % 2 == 0:
+            b_win += 1
+        else:
+            m_win += 1
+
+    # Compare wins and determine overall winner
+    if b_win > m_win:
         return "Ben"
+    elif m_win > b_win:
+        return "Maria"
     else:
         return None
