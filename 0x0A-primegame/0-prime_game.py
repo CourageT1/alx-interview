@@ -13,61 +13,34 @@ Author: Talent
 """
 
 
-def is_prime(num):
+def SieveOfEratosthenes(n):
     """
-    Check if a number is prime.
+    Implementing the Sieve of Eratosthenes algorithm to find prime numbers.
 
     Args:
-        num (int): The number to check for primality.
+        n (int): The upper limit for finding prime numbers.
 
     Returns:
-        bool: True if the number is prime, False otherwise.
+        int: The count of prime numbers up to the given limit.
     """
-    if num < 2:
-        return False
-    for i in range(2, int(num ** 0.5) + 1):
-        if num % i == 0:
-            return False
-    return True
+    # Initialize a list to mark numbers as prime or not
+    prime = [True for i in range(n+1)]
+    p = 2
+    result = 0
 
+    # Loop through numbers until the square root of n
+    while (p * p <= n):
+        if (prime[p] is True):
+            # Mark multiples of prime numbers as not prime
+            for i in range(p * p, n+1, p):
+                prime[i] = False
+        p += 1
 
-def prime_sieve(limit):
-    """
-    Generate all prime numbers up to a given limit using the Sieve of
-    Eratosthenes algorithm.
-
-    Args:
-        limit (int): The upper limit for prime number generation.
-
-    Returns:
-        list: A list of prime numbers up to the specified limit.
-    """
-    sieve = [True] * (limit + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(limit ** 0.5) + 1):
-        if sieve[i]:
-            for j in range(i * i, limit + 1, i):
-                sieve[j] = False
-    return [num for num in range(limit + 1) if sieve[num]]
-
-
-def simulate_game(n):
-    """
-    Simulate a single round of the game for a given set of consecutive
-    integers up to n.
-
-    Args:
-        n (int): The upper limit of the set of consecutive integers.
-
-    Returns:
-        str: The name of the player who wins the game ('Maria' or 'Ben').
-    """
-    primes = prime_sieve(n)
-    num_primes = len(primes)
-    if num_primes % 2 == 0:
-        return "Ben"
-    else:
-        return "Maria"
+    # Count the number of primes
+    for p in range(2, n+1):
+        if prime[p]:
+            result += 1
+    return result
 
 
 def isWinner(x, nums):
